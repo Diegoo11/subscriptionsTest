@@ -94,7 +94,7 @@ const resolvers = {
 
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: '/graphql',
+  path: '/subscriptions',
 });
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -117,10 +117,10 @@ const server = new ApolloServer({
 
 await server.start();
 
-app.use('/graphql', cors(), bodyParser.json(), expressMiddleware(server));
+app.use('/subscriptions', cors(), bodyParser.json(), expressMiddleware(server));
 
 await new Promise((resolve) => {
   httpServer.listen({ port: 5000 }, resolve);
 });
 
-console.log('🚀 Server ready at http://localhost:5000/graphql');
+console.log('🚀 Server ready at http://localhost:5000/subscriptions');
